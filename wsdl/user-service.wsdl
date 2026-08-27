@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="urn:upbcientifica:user-service"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="urn:upbcientifica:user-service"
+             name="UserService">
+  <types>
+    <xsd:schema targetNamespace="urn:upbcientifica:user-service" elementFormDefault="qualified">
+      <xsd:complexType name="ArrayOfString">
+        <xsd:sequence>
+          <xsd:element name="item" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="User">
+        <xsd:sequence>
+          <xsd:element name="username" type="xsd:string"/>
+          <xsd:element name="givenName" type="xsd:string"/>
+          <xsd:element name="sn" type="xsd:string"/>
+          <xsd:element name="mail" type="xsd:string"/>
+          <xsd:element name="groups" type="tns:ArrayOfString" minOccurs="0"/>
+          <xsd:element name="uid" type="xsd:string"/>
+          <xsd:element name="homeDirectory" type="xsd:string"/>
+          <xsd:element name="active" type="xsd:boolean"/>
+          <xsd:element name="roleCode" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfUser">
+        <xsd:sequence>
+          <xsd:element name="user" type="tns:User" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:element name="authenticateUser">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+            <xsd:element name="password" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="authenticateUserResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="token" type="xsd:string"/>
+            <xsd:element name="roleCode" type="xsd:string"/>
+            <xsd:element name="permissions" type="tns:ArrayOfString"/>
+            <xsd:element name="expiresAt" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="validateToken">
+        <xsd:complexType>
+          <xsd:sequence/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="validateTokenResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="valid" type="xsd:boolean"/>
+            <xsd:element name="username" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="roleCode" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="permissions" type="tns:ArrayOfString"/>
+            <xsd:element name="expiresAt" type="xsd:string" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="createUser">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+            <xsd:element name="password" type="xsd:string"/>
+            <xsd:element name="givenName" type="xsd:string"/>
+            <xsd:element name="sn" type="xsd:string"/>
+            <xsd:element name="mail" type="xsd:string"/>
+            <xsd:element name="roleCode" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="quotaMb" type="xsd:int" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createUserResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+            <xsd:element name="roleCode" type="xsd:string"/>
+            <xsd:element name="permissions" type="tns:ArrayOfString"/>
+            <xsd:element name="created" type="xsd:boolean"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="updateUser">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+            <xsd:element name="givenName" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="sn" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="mail" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="active" type="xsd:boolean" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateUserResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+            <xsd:element name="updated" type="xsd:boolean"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="deleteUser">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deleteUserResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+            <xsd:element name="deleted" type="xsd:boolean"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="getUser">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getUserResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+            <xsd:element name="givenName" type="xsd:string"/>
+            <xsd:element name="sn" type="xsd:string"/>
+            <xsd:element name="mail" type="xsd:string"/>
+            <xsd:element name="groups" type="tns:ArrayOfString" minOccurs="0"/>
+            <xsd:element name="uid" type="xsd:string"/>
+            <xsd:element name="homeDirectory" type="xsd:string"/>
+            <xsd:element name="active" type="xsd:boolean"/>
+            <xsd:element name="roleCode" type="xsd:string" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="listUsers">
+        <xsd:complexType>
+          <xsd:sequence/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="listUsersResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="users" type="tns:ArrayOfUser"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="assignRole">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+            <xsd:element name="roleCode" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="assignRoleResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+            <xsd:element name="roleCode" type="xsd:string"/>
+            <xsd:element name="assigned" type="xsd:boolean"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="removeRole">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+            <xsd:element name="roleCode" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="removeRoleResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+            <xsd:element name="roleCode" type="xsd:string"/>
+            <xsd:element name="removed" type="xsd:boolean"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="getRoles">
+        <xsd:complexType><xsd:sequence/></xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getRolesResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="roles" type="tns:ArrayOfString"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="getPermissions">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="roleCode" type="xsd:string" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getPermissionsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="permissions" type="tns:ArrayOfString"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="setQuota">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+            <xsd:element name="quotaMb" type="xsd:int"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="setQuotaResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+            <xsd:element name="quotaMb" type="xsd:int"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="getQuota">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getQuotaResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+            <xsd:element name="quotaMb" type="xsd:int"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="updateQuota">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+            <xsd:element name="quotaMb" type="xsd:int"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateQuotaResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+            <xsd:element name="quotaMb" type="xsd:int"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="enableService">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+            <xsd:element name="serviceCode" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="enableServiceResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+            <xsd:element name="serviceCode" type="xsd:string"/>
+            <xsd:element name="enabled" type="xsd:boolean"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="disableService">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+            <xsd:element name="serviceCode" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="disableServiceResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+            <xsd:element name="serviceCode" type="xsd:string"/>
+            <xsd:element name="enabled" type="xsd:boolean"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="listUserServices">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="listUserServicesResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+            <xsd:element name="services" type="tns:ArrayOfString"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="getHomeDirectory">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getHomeDirectoryResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+            <xsd:element name="homeDirectory" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="getUserStorageInfo">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getUserStorageInfoResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+            <xsd:element name="quotaMb" type="xsd:int"/>
+            <xsd:element name="usedMb" type="xsd:int"/>
+            <xsd:element name="availableMb" type="xsd:int"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+
+  <message name="authenticateUserRequest"><part name="parameters" element="tns:authenticateUser"/></message>
+  <message name="authenticateUserResponse"><part name="parameters" element="tns:authenticateUserResponse"/></message>
+  <message name="validateTokenRequest"><part name="parameters" element="tns:validateToken"/></message>
+  <message name="validateTokenResponse"><part name="parameters" element="tns:validateTokenResponse"/></message>
+  <message name="createUserRequest"><part name="parameters" element="tns:createUser"/></message>
+  <message name="createUserResponse"><part name="parameters" element="tns:createUserResponse"/></message>
+  <message name="updateUserRequest"><part name="parameters" element="tns:updateUser"/></message>
+  <message name="updateUserResponse"><part name="parameters" element="tns:updateUserResponse"/></message>
+  <message name="deleteUserRequest"><part name="parameters" element="tns:deleteUser"/></message>
+  <message name="deleteUserResponse"><part name="parameters" element="tns:deleteUserResponse"/></message>
+  <message name="getUserRequest"><part name="parameters" element="tns:getUser"/></message>
+  <message name="getUserResponse"><part name="parameters" element="tns:getUserResponse"/></message>
+  <message name="listUsersRequest"><part name="parameters" element="tns:listUsers"/></message>
+  <message name="listUsersResponse"><part name="parameters" element="tns:listUsersResponse"/></message>
+  <message name="assignRoleRequest"><part name="parameters" element="tns:assignRole"/></message>
+  <message name="assignRoleResponse"><part name="parameters" element="tns:assignRoleResponse"/></message>
+  <message name="removeRoleRequest"><part name="parameters" element="tns:removeRole"/></message>
+  <message name="removeRoleResponse"><part name="parameters" element="tns:removeRoleResponse"/></message>
+  <message name="getRolesRequest"><part name="parameters" element="tns:getRoles"/></message>
+  <message name="getRolesResponse"><part name="parameters" element="tns:getRolesResponse"/></message>
+  <message name="getPermissionsRequest"><part name="parameters" element="tns:getPermissions"/></message>
+  <message name="getPermissionsResponse"><part name="parameters" element="tns:getPermissionsResponse"/></message>
+  <message name="setQuotaRequest"><part name="parameters" element="tns:setQuota"/></message>
+  <message name="setQuotaResponse"><part name="parameters" element="tns:setQuotaResponse"/></message>
+  <message name="getQuotaRequest"><part name="parameters" element="tns:getQuota"/></message>
+  <message name="getQuotaResponse"><part name="parameters" element="tns:getQuotaResponse"/></message>
+  <message name="updateQuotaRequest"><part name="parameters" element="tns:updateQuota"/></message>
+  <message name="updateQuotaResponse"><part name="parameters" element="tns:updateQuotaResponse"/></message>
+  <message name="enableServiceRequest"><part name="parameters" element="tns:enableService"/></message>
+  <message name="enableServiceResponse"><part name="parameters" element="tns:enableServiceResponse"/></message>
+  <message name="disableServiceRequest"><part name="parameters" element="tns:disableService"/></message>
+  <message name="disableServiceResponse"><part name="parameters" element="tns:disableServiceResponse"/></message>
+  <message name="listUserServicesRequest"><part name="parameters" element="tns:listUserServices"/></message>
+  <message name="listUserServicesResponse"><part name="parameters" element="tns:listUserServicesResponse"/></message>
+  <message name="getHomeDirectoryRequest"><part name="parameters" element="tns:getHomeDirectory"/></message>
+  <message name="getHomeDirectoryResponse"><part name="parameters" element="tns:getHomeDirectoryResponse"/></message>
+  <message name="getUserStorageInfoRequest"><part name="parameters" element="tns:getUserStorageInfo"/></message>
+  <message name="getUserStorageInfoResponse"><part name="parameters" element="tns:getUserStorageInfoResponse"/></message>
+
+  <portType name="UserServicePortType">
+    <operation name="authenticateUser">
+      <input message="tns:authenticateUserRequest"/>
+      <output message="tns:authenticateUserResponse"/>
+    </operation>
+    <operation name="validateToken">
+      <input message="tns:validateTokenRequest"/>
+      <output message="tns:validateTokenResponse"/>
+    </operation>
+    <operation name="createUser">
+      <input message="tns:createUserRequest"/>
+      <output message="tns:createUserResponse"/>
+    </operation>
+    <operation name="updateUser">
+      <input message="tns:updateUserRequest"/>
+      <output message="tns:updateUserResponse"/>
+    </operation>
+    <operation name="deleteUser">
+      <input message="tns:deleteUserRequest"/>
+      <output message="tns:deleteUserResponse"/>
+    </operation>
+    <operation name="getUser">
+      <input message="tns:getUserRequest"/>
+      <output message="tns:getUserResponse"/>
+    </operation>
+    <operation name="listUsers">
+      <input message="tns:listUsersRequest"/>
+      <output message="tns:listUsersResponse"/>
+    </operation>
+    <operation name="assignRole">
+      <input message="tns:assignRoleRequest"/>
+      <output message="tns:assignRoleResponse"/>
+    </operation>
+    <operation name="removeRole">
+      <input message="tns:removeRoleRequest"/>
+      <output message="tns:removeRoleResponse"/>
+    </operation>
+    <operation name="getRoles">
+      <input message="tns:getRolesRequest"/>
+      <output message="tns:getRolesResponse"/>
+    </operation>
+    <operation name="getPermissions">
+      <input message="tns:getPermissionsRequest"/>
+      <output message="tns:getPermissionsResponse"/>
+    </operation>
+    <operation name="setQuota">
+      <input message="tns:setQuotaRequest"/>
+      <output message="tns:setQuotaResponse"/>
+    </operation>
+    <operation name="getQuota">
+      <input message="tns:getQuotaRequest"/>
+      <output message="tns:getQuotaResponse"/>
+    </operation>
+    <operation name="updateQuota">
+      <input message="tns:updateQuotaRequest"/>
+      <output message="tns:updateQuotaResponse"/>
+    </operation>
+    <operation name="enableService">
+      <input message="tns:enableServiceRequest"/>
+      <output message="tns:enableServiceResponse"/>
+    </operation>
+    <operation name="disableService">
+      <input message="tns:disableServiceRequest"/>
+      <output message="tns:disableServiceResponse"/>
+    </operation>
+    <operation name="listUserServices">
+      <input message="tns:listUserServicesRequest"/>
+      <output message="tns:listUserServicesResponse"/>
+    </operation>
+    <operation name="getHomeDirectory">
+      <input message="tns:getHomeDirectoryRequest"/>
+      <output message="tns:getHomeDirectoryResponse"/>
+    </operation>
+    <operation name="getUserStorageInfo">
+      <input message="tns:getUserStorageInfoRequest"/>
+      <output message="tns:getUserStorageInfoResponse"/>
+    </operation>
+  </portType>
+
+  <binding name="UserServiceBinding" type="tns:UserServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="authenticateUser">
+      <soap:operation soapAction="urn:upbcientifica:user-service#authenticateUser" style="document"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="validateToken">
+      <soap:operation soapAction="urn:upbcientifica:user-service#validateToken" style="document"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="createUser">
+      <soap:operation soapAction="urn:upbcientifica:user-service#createUser" style="document"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="updateUser">
+      <soap:operation soapAction="urn:upbcientifica:user-service#updateUser" style="document"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="deleteUser">
+      <soap:operation soapAction="urn:upbcientifica:user-service#deleteUser" style="document"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="getUser">
+      <soap:operation soapAction="urn:upbcientifica:user-service#getUser" style="document"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="listUsers">
+      <soap:operation soapAction="urn:upbcientifica:user-service#listUsers" style="document"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="assignRole">
+      <soap:operation soapAction="urn:upbcientifica:user-service#assignRole" style="document"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="removeRole">
+      <soap:operation soapAction="urn:upbcientifica:user-service#removeRole" style="document"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="getRoles">
+      <soap:operation soapAction="urn:upbcientifica:user-service#getRoles" style="document"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="getPermissions">
+      <soap:operation soapAction="urn:upbcientifica:user-service#getPermissions" style="document"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="setQuota">
+      <soap:operation soapAction="urn:upbcientifica:user-service#setQuota" style="document"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="getQuota">
+      <soap:operation soapAction="urn:upbcientifica:user-service#getQuota" style="document"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="updateQuota">
+      <soap:operation soapAction="urn:upbcientifica:user-service#updateQuota" style="document"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="enableService">
+      <soap:operation soapAction="urn:upbcientifica:user-service#enableService" style="document"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="disableService">
+      <soap:operation soapAction="urn:upbcientifica:user-service#disableService" style="document"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="listUserServices">
+      <soap:operation soapAction="urn:upbcientifica:user-service#listUserServices" style="document"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="getHomeDirectory">
+      <soap:operation soapAction="urn:upbcientifica:user-service#getHomeDirectory" style="document"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="getUserStorageInfo">
+      <soap:operation soapAction="urn:upbcientifica:user-service#getUserStorageInfo" style="document"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+  </binding>
+
+  <service name="UserService">
+    <port name="UserServicePort" binding="tns:UserServiceBinding">
+      <soap:address location="https://HOST/users/soap"/>
+    </port>
+  </service>
+</definitions>

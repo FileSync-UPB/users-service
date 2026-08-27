@@ -1,0 +1,120 @@
+dn: dc=upbcientifica,dc=local
+objectClass: top
+objectClass: dcObject
+objectClass: organization
+o: UPB Cientifica
+dc: upbcientifica
+
+dn: ou=People,dc=upbcientifica,dc=local
+objectClass: top
+objectClass: organizationalUnit
+ou: People
+
+dn: ou=Groups,dc=upbcientifica,dc=local
+objectClass: top
+objectClass: organizationalUnit
+ou: Groups
+
+dn: ou=Services,dc=upbcientifica,dc=local
+objectClass: top
+objectClass: organizationalUnit
+ou: Services
+
+dn: cn=Administradores,ou=Groups,dc=upbcientifica,dc=local
+objectClass: top
+objectClass: posixGroup
+cn: Administradores
+gidNumber: 10000
+memberUid: admin
+
+dn: cn=Investigadores,ou=Groups,dc=upbcientifica,dc=local
+objectClass: top
+objectClass: posixGroup
+cn: Investigadores
+gidNumber: 10001
+memberUid: investigador1
+
+dn: cn=Empleados,ou=Groups,dc=upbcientifica,dc=local
+objectClass: top
+objectClass: posixGroup
+cn: Empleados
+gidNumber: 10002
+memberUid: empleado1
+
+dn: cn=Invitados,ou=Groups,dc=upbcientifica,dc=local
+objectClass: top
+objectClass: posixGroup
+cn: Invitados
+gidNumber: 10003
+
+dn: uid=admin,ou=People,dc=upbcientifica,dc=local
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: admin
+cn: admin
+sn: Admin
+givenName: Admin
+mail: admin@upbcientifica.local
+uidNumber: 10000
+gidNumber: 10000
+homeDirectory: /home/admin
+loginShell: /bin/bash
+userPassword: ChangeMe123!
+shadowLastChange: 20000
+shadowMin: 0
+shadowMax: 99999
+shadowWarning: 7
+shadowInactive: 30
+shadowExpire: 0
+
+dn: uid=investigador1,ou=People,dc=upbcientifica,dc=local
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: investigador1
+cn: investigador1
+sn: Investigador
+givenName: Investigador
+mail: investigador1@upbcientifica.local
+uidNumber: 10001
+gidNumber: 10001
+homeDirectory: /home/investigador1
+loginShell: /bin/bash
+userPassword: Research123!
+shadowLastChange: 20000
+shadowMin: 0
+shadowMax: 99999
+shadowWarning: 7
+shadowInactive: 30
+shadowExpire: 0
+
+dn: uid=empleado1,ou=People,dc=upbcientifica,dc=local
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: empleado1
+cn: empleado1
+sn: Empleado
+givenName: Empleado
+mail: empleado1@upbcientifica.local
+uidNumber: 10002
+gidNumber: 10002
+homeDirectory: /home/empleado1
+loginShell: /bin/bash
+userPassword: Employee123!
+shadowLastChange: 20000
+shadowMin: 0
+shadowMax: 99999
+shadowWarning: 7
+shadowInactive: 30
+shadowExpire: 0

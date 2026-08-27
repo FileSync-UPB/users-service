@@ -1,0 +1,21 @@
+{
+  "name": "upbcientifica/user-service",
+  "description": "UPB Científica SOAP user service with LDAP and MySQL.",
+  "type": "project",
+  "require": {
+    "php": "^8.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "UpbCientifica\\UserService\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "UpbCientifica\\UserService\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": "php tests/RunTests.php"
+  }
+}
