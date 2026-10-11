@@ -95,7 +95,12 @@ final class SoapResponseBuilder
             return;
         }
 
-        $parent->appendChild($document->createTextNode($this->scalarToString($value)));
+        if ($name !== null) {
+            $child = $namespace !== null ? $document->createElementNS($namespace, $name, $this->scalarToString($value)) : $document->createElement($name, $this->scalarToString($value));
+            $parent->appendChild($child);
+        } else {
+            $parent->appendChild($document->createTextNode($this->scalarToString($value)));
+        }
     }
 
     private function scalarToString(mixed $value): string

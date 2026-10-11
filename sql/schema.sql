@@ -1,8 +1,8 @@
-CREATE DATABASE IF NOT EXISTS upbcientifica_user_service
+CREATE DATABASE IF NOT EXISTS fylesync_users
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
 
-USE upbcientifica_user_service;
+USE fylesync_users;
 
 CREATE TABLE IF NOT EXISTS roles (
   role_code VARCHAR(64) NOT NULL,

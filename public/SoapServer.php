@@ -16,6 +16,15 @@ $config = require __DIR__ . '/../config/bootstrap.php';
 $rawXml = file_get_contents('php://input') ?: '';
 $clientIp = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
 
+// Handle CORS
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, SOAPAction, Authorization');
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
+
 $pdoFactory = new PdoFactory($config);
 $applicationRepository = new PdoApplicationRepository($pdoFactory->create());
 $ldapRepository = new ExtLdapDirectoryRepository($config);
