@@ -177,6 +177,7 @@ final class UserManagementService
             if ($request->quotaMb !== null) {
                 $this->applicationRepository->setQuota($request->username, $request->quotaMb);
             }
+            $this->ensureStorageDirectory($request->username, $role, $request->quotaMb ?? 1024);
             $this->applicationRepository->recordAudit(new AuditEntry(
                 $request->username,
                 'createUser',
@@ -190,6 +191,29 @@ final class UserManagementService
         }
 
         return new CreateUserResponse($request->username, $role, $this->applicationRepository->getPermissionsForRole($role), true);
+    }
+
+    private function ensureStorageDirectory(string $username, string $role, int $quotaMb): void
+    {
+        $dir = DIRECTORY_SEPARATOR === '\\'
+            ? 'C:\\fylesync\\home\\' . $username
+            : '/var/fylesync/home/' . $username;
+
+        try {
+            if (!is_dir($dir)) {
+                @mkdir($dir, 0777, true);
+            }
+            if (is_dir($dir)) {
+                @chmod($dir, 0777);
+                $welcome = $dir . DIRECTORY_SEPARATOR . 'BIENVENIDO.txt';
+                if (!file_exists($welcome)) {
+                    @file_put_contents($welcome, "FyleSync Enterprise - Repositorio de $username\nRol: $role\nCuota: $quotaMb MB\nFecha: " . date('Y-m-d H:i:s') . "\n");
+                    @chmod($welcome, 0666);
+                }
+            }
+        } catch (\Throwable $e) {
+            // No interrumpir si el sistema de archivos está en red/remoto
+        }
     }
 
     /**
