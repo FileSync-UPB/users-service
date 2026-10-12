@@ -106,7 +106,7 @@ final class AppConfig
      */
     public function tokenTtlSeconds(): int
     {
-        return max(1, (int) ($this->env('TOKEN_TTL', '3600') ?? '3600'));
+        return max(1, (int) ($this->env('TOKEN_TTL', '86400') ?? '86400'));
     }
 
     /**
